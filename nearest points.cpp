@@ -28,6 +28,7 @@ double distance(vector<pair<int, int> > &a,int s,int e)
 	}
 	return t;
 }
+//changes required here
 vector<pair<int, int> >dis(vector<pair<int, int> > &a,int s,int e)
 {
 	
