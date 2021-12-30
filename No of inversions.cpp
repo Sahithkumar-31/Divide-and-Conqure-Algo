@@ -1,73 +1,78 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
 using namespace std;
-int merge(int a[],int a1[],int left,int mid,int right)
+void merge(int a[],int l,int mid,int r,int n)
 {
-	int count=0;
-	int i=left;
-	int j=mid;
-	int k=left;
-	while((i<=mid-1)&&(j<=right))
+	int i = l;
+	int j = mid+1;
+	int k = l;
+	int temp[n];
+	while(i<=mid && j<=r)
 	{
-	if (a[i]<=a[j])
+		if(a[i]<=a[j])
+		{
+			temp[k] = a[i];
+			i++;
+			k++;
+		}
+		else
+		{
+			temp[k] = a[j];
+			j++;
+			k++;
+		}
+	}
+	while(i<=mid)
 	{
-	a1[k++]=a[i++];}
-	else
+			temp[k] = a[i];
+			k++;
+			i++;
+		
+	}
+	while(j<=r)
 	{
-		a1[k++]=a[j++];
-		count=count+(mid-i);
+			temp[k] = a[j];
+			k++;
+			j++;
 	}
-	}
-	
-	while(i<=mid-1){
-		a1[k++]=a[i++];
-	}
-	while(j<=right)
+	for(int t = 0;t<=r;t++)
 	{
-		a1[k++]=a[j++];
+		a[t] = temp[t];
 	}
-	for(int i=left;i<=right;i++)
-	{
-		a[i]=a1[i];
-	}
-
-	return count;
 }
 
-
-int mergesort(int a[],int a1[],int left,int right)
+void mergesort(int a[],int l,int r,int n)
 {
-	int count=0;
-	int mid;
-	if(right>left)
+	if(l<r)
 	{
-	    mid=(right+left)/2;
-		count+=mergesort(a,a1,left,mid);
-		count+=mergesort(a,a1,mid+1,right);
-		count+=merge(a,a1,left,mid+1,right);
+		int mid = (l+r)/2;
+		mergesort(a,l,mid,n);
+		mergesort(a,mid+1,r,n);
+		merge(a,l,mid,r,n);
 	}
-
-	return count;
-}
-
-int inverse_c(int a[],int n)
-{
-	int a1[n];
-	return mergesort(a,a1,0,n-1);
 }
 
 int main()
 {
 	int n;
 	cin>>n;
-	int a[n];
-	for(int i=0;i<n;i++)
+	int arr[n];
+	
+	for(int i = 0;i<n;i++)
 	{
-		cin>>a[i];
+		cin>>arr[i];
 	}
-	int b=inverse_c(a,n);
-	cout<<b;
+	cout<<"BEFORE SORTING"<<endl;
+	for(int i = 0;i<n;i++)
+	{
+		cout<<arr[i]<<" ";
+	}
+	cout<<endl;
+	mergesort(arr,0,n-1,n);
+	cout<<"AFTER SORTING"<<endl;
+	for(int i = 0;i<n;i++)
+	{
+		cout<<arr[i]<<" ";
+	}
 	
 	
 }
